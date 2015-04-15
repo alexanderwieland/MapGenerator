@@ -36,7 +36,7 @@ namespace MapGenerator
             {
                 for (int y = 0; y < GraphicsDevice.BackBuffer.Height ; y += 50)
                 {
-                    tile_list.Add( new Tile( Content.Load<Texture2D>("Grass.png"), new Vector2( x, y ) ) );
+                    tile_list.Add( new Tile( Content.Load<Texture2D>("Grass.png"), new Vector2( x, y ), Tile.EDGE_TYPE.DIRT, Tile.EDGE_TYPE.DIRT, Tile.EDGE_TYPE.DIRT, Tile.EDGE_TYPE.DIRT ) );
                 }
             }                       
 
@@ -47,8 +47,6 @@ namespace MapGenerator
         {
             GraphicsDevice.Clear( Color.CornflowerBlue );
 
-            //    (this.GraphicsDevice.BackBuffer.Width / 2.0f) - (this.planeTexture.Width / 2.0f),
-             //   (this.GraphicsDevice.BackBuffer.Height / 2.0f) - (this.planeTexture.Height / 2.0f));
 
             spriteBatch.Begin( SpriteSortMode.Deferred, this.GraphicsDevice.BlendStates.NonPremultiplied );
 
