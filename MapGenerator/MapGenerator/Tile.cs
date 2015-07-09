@@ -63,7 +63,10 @@ namespace MapGenerator
         public enum EDGE_TYPE
         {
             GRASS,
-            DIRT
+            DIRT,
+            GRAVEL,
+            SAND
+
         };
 
 

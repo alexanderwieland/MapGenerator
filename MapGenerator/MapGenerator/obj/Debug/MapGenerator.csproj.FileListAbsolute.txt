@@ -28,3 +28,7 @@ D:\GiHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\AssimpNet.xml
 D:\GiHub\MapGenerator\MapGenerator\MapGenerator\obj\Debug\MapGenerator.exe
 D:\GiHub\MapGenerator\MapGenerator\MapGenerator\obj\Debug\MapGenerator.pdb
 D:\GiHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Content\Grass.png
+D:\GiHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Content\Dirt.png
+D:\GiHub\MapGenerator\MapGenerator\MapGenerator\obj\Debug\MapGenerator.csprojResolveAssemblyReference.cache
+D:\GiHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Content\Gravel.png
+D:\GiHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Content\Sand.png
