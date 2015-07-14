@@ -86,6 +86,38 @@ namespace MapGenerator
                 }
             }
 
+
+			for (int i = 800 / 50 - 1; i > 0; i--)
+			{
+				for (int j = 600 / 50 - 1;j>0; j--)
+				{
+					if (j == 0)
+					{
+						map[i, j] = map[i - 1, j];
+					}
+					else if (i == 0)
+					{
+						map[i, j] = map[i, j - 1];
+					}
+
+					switch (randy.Next(0, 3) + 1)
+					{
+						case 1:
+							map[i, j] = map[i - 1, j];
+							break;
+						case 2:
+							map[i, j] = map[i, j - 1];
+							break;
+						case 3:
+							map[i, j] = map[i - 1, j - 1];
+							break;
+					}
+                    
+
+				}
+
+			}
+
             for (int x = 0; x < 800/50; x++)
             {
                 for (int y = 0; y < 600/50; y++)
