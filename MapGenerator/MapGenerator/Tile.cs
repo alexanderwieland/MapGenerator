@@ -10,65 +10,28 @@ using SharpDX.Toolkit.Graphics;
 
 namespace MapGenerator
 {
-    class Tile
+  class Tile
+  {
+    public Vector2 position;
+
+    public TILE_TYPE type;
+
+    public TILE_ORIENTATION orientation;
+
+    public Texture2D texture;
+
+    public Tile(Texture2D texture, Vector2 position, TILE_TYPE type, TILE_ORIENTATION orientation)
     {
-        
-        public Vector2 position;
-        public Texture2D texture;
-
-        private EDGE_TYPE north;
-
-        public EDGE_TYPE North
-        {
-            get { return north; }
-            set { north = value; }
-        }
-
-        private EDGE_TYPE east;
-
-        public EDGE_TYPE East
-        {
-            get { return east; }
-            set { east = value; }
-        }
-
-        private EDGE_TYPE south;
-
-        public EDGE_TYPE South
-        {
-            get { return south; }
-            set { south = value; }
-        }
-
-        private EDGE_TYPE west;
-
-        public EDGE_TYPE West
-        {
-            get { return west; }
-            set { west = value; }
-        }
-
-
-        public  Tile(Texture2D texture, Vector2 position, EDGE_TYPE north, EDGE_TYPE east, EDGE_TYPE south, EDGE_TYPE west)
-        {
-            this.north = north;
-            this.east = east;
-            this.south = south;
-            this.west = west;
-
-            this.texture = texture;
-            this.position = position;
-        }
-
-        public enum EDGE_TYPE
-        {
-            GRASS,
-            DIRT,
-            GRAVEL,
-            SAND
-
-        };
-
-
+      this.texture = texture;
+      this.position = position;
+      this.orientation = orientation;
+      this.type = type;
     }
+
+    public void Draw(SpriteBatch spriteBatch)
+    {
+      
+      spriteBatch.Draw(this.texture, this.position, Color.White);
+    }
+  }
 }
