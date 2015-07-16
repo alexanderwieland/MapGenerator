@@ -53,8 +53,8 @@ namespace MapGenerator
 
       int randy_new = 128;
       int randy_old = 128;
-      int max_bioms = 4;
-
+      int max_bioms = Enum.GetNames(typeof(TILE_TYPE)).Length;
+      
       int a = 256 / max_bioms;
 
       for (int i = 0; i < Width; i++)
@@ -80,6 +80,7 @@ namespace MapGenerator
           }
 
           map[i, j] = new Tile(
+             Generator.tiles[(TILE_TYPE)(randy_new / a)][TILE_ORIENTATION.CENTER],
              Generator.tiles[(TILE_TYPE)(randy_new / a)][TILE_ORIENTATION.CENTER],
              new Vector2(i * Generator.tile_pixels, j * Generator.tile_pixels),
              (TILE_TYPE)(randy_new / a),
@@ -115,6 +116,7 @@ namespace MapGenerator
           {
             map[i, j] = new Tile(
               Generator.tiles[(TILE_TYPE)(randy_new / a)][TILE_ORIENTATION.CENTER],
+              Generator.tiles[(TILE_TYPE)(randy_new / a)][TILE_ORIENTATION.CENTER],
               new Vector2(i * Generator.tile_pixels, j * Generator.tile_pixels),
               (TILE_TYPE)(randy_new / a),
               TILE_ORIENTATION.CENTER
@@ -127,6 +129,30 @@ namespace MapGenerator
       foreach (var item in map)
       {
         Console.WriteLine(item.position.X + " " + item.position.Y);
+      }
+    }
+
+    public void generate_sec_map(Tile[,] ground_map)
+    {
+      int max_bioms = Enum.GetNames(typeof(TILE_TYPE)).Length;
+
+      int a = 256 / max_bioms;
+
+      for (int biom = max_bioms; biom > 0; biom--)
+      {
+        int b = 4;
+        for (int i = 0; i < Width; i++)
+        {
+          for (int j = 0; j < Height; j++)
+          {
+            if( (int)ground_map[i,j].type == b )
+            {
+              map[i, j].draw_height = biom;
+
+              
+            }
+          }
+        }
       }
     }
 

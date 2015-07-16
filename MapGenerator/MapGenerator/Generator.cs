@@ -41,7 +41,7 @@ namespace MapGenerator
     public static Dictionary<MapGenerator.TILE_TYPE, Dictionary<MapGenerator.TILE_ORIENTATION, Texture2D>> tiles;
 
     public static int tile_pixels = 50;
-
+    
     private List<Tile> tile_list = new List<Tile>();
 
     TileMap map_ground;
@@ -54,6 +54,8 @@ namespace MapGenerator
       deviceManager = new GraphicsDeviceManager(this);
       deviceManager.PreferredBackBufferWidth = draw_width;
       deviceManager.PreferredBackBufferHeight = draw_height;
+
+      IsMouseVisible = true;
 
       this.Content.RootDirectory = "Content";
     }
@@ -86,10 +88,10 @@ namespace MapGenerator
       AddTextureType(TILE_TYPE.GRAVEL);
       AddTextureType(TILE_TYPE.SAND);
 
-      AddTexture(TILE_TYPE.GRASS, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Grass_full.png"));
-      AddTexture(TILE_TYPE.DIRT, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Dirt_full.png"));
-      AddTexture(TILE_TYPE.SAND, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Sand_full.png"));
-      AddTexture(TILE_TYPE.GRAVEL, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Gravel_full.png"));
+      AddTexture(TILE_TYPE.GRASS, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Grass_in.png"));
+      AddTexture(TILE_TYPE.DIRT, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Dirt_in.png"));
+      AddTexture(TILE_TYPE.SAND, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Sand_in.png"));
+      AddTexture(TILE_TYPE.GRAVEL, TILE_ORIENTATION.CENTER, Content.Load<Texture2D>("Gravel_in.png"));
       
     }
 
