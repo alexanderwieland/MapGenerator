@@ -12,7 +12,7 @@ namespace MapGenerator
   class TileMap
   {
 
-    private List<Texture2D> list_textures = new List<Texture2D>();
+    public List<Tile[,]> overlay_maps = new List<Tile[,]>();
 
 
     Tile[,] map;
@@ -30,21 +30,57 @@ namespace MapGenerator
     public TileMap(int width, int height)
     {
       map = new Tile[width, height];
-      
-
     }    
 
   
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch, SpriteFont sf)
     {
       for (int x = 0; x < Width; x++)
       {
         for (int y = 0; y < Height; y++)
         {
-          map[x, y].Draw(spriteBatch);
+          map[x, y].Draw(spriteBatch,x,y,sf);
         }
       }
+    }
+
+    public void generate_overlay_maps()
+    {
+      Random rand = new Random();      
+      
+
+      int max_bioms = Enum.GetNames(typeof(TILE_TYPE)).Length - 1;
+
+      int a = 256 / max_bioms;
+
+      for (int biom = max_bioms; biom >= 0; biom--)
+      {
+        Tile[,] map = new Tile[Width, Height];
+
+        for (int i = 0; i < Width; i++)
+        {
+          for (int j = 0; j < Height; j++)
+          {
+
+
+
+            map[i, j] = new Tile(
+               Generator.tiles[(TILE_TYPE)(biom)][TILE_ORIENTATION.CENTER],
+               Generator.tiles[(TILE_TYPE)(biom)][TILE_ORIENTATION.CENTER],
+               new Vector2(i * Generator.tile_pixels, j * Generator.tile_pixels),
+               (TILE_TYPE)(biom),
+               TILE_ORIENTATION.CENTER
+              );
+
+          }
+        }
+
+        overlay_maps.Add(map);
+      }
+
+
+       
     }
 
     public void generate_ground_map()
@@ -126,30 +162,53 @@ namespace MapGenerator
         }
       }
 
-      foreach (var item in map)
+      for (int i = 0; i < Width; i++)
       {
-        Console.WriteLine(item.position.X + " " + item.position.Y);
+        for (int j = 0; j < Height; j++)
+        {
+          Console.WriteLine(" [" + i + ", " + j + "] " + map[i,j].type.ToString());
+        }
       }
     }
 
-    public void generate_sec_map(Tile[,] ground_map)
+    public void render_ground_map()
     {
-      int max_bioms = Enum.GetNames(typeof(TILE_TYPE)).Length;
+      int max_bioms = Enum.GetNames(typeof(TILE_TYPE)).Length -1;
 
       int a = 256 / max_bioms;
 
-      for (int biom = max_bioms; biom > 0; biom--)
+      for (int biom = max_bioms; biom >= 0; biom--)
       {
-        int b = 4;
-        for (int i = 0; i < Width; i++)
+        for (int i = 1; i < Width; i++)
         {
-          for (int j = 0; j < Height; j++)
+          for (int j = 1; j < Height; j++)
           {
-            if( (int)ground_map[i,j].type == b )
+            if ( (int)map[i,j].type == biom)
             {
-              map[i, j].draw_height = biom;
 
-              
+              if((int)map[i-1, j-1].type == biom)
+              {
+                if ((int)map[i , j - 1].type != biom && (int)map[i - 1, j].type != biom)
+                {
+
+                  Console.WriteLine("Changed Tile [" + i + ", " + (j - 1) + "].type " + map[i, j - 1].type + " to " + ((TILE_TYPE)biom).ToString() +
+                                     " because Tile [" + i + ", " + j + "].type " + map[i, j ].type);
+                  //map[i - 1, j - 1].type = map[i, j - 1].type;
+                  map[i, j - 1].change_biom( (TILE_TYPE)biom);
+                }
+              }
+
+              if ( i < Height -1  && (int)map[i + 1, j - 1].type == biom)
+              {
+                if ((int)map[i, j - 1].type != biom && (int)map[i + 1, j].type != biom)
+                {
+
+                  Console.WriteLine("Changed Tile [" + i + ", " + (j - 1) + "].type " + map[i, j - 1].type + " to " + ((TILE_TYPE)biom).ToString() +
+                                     " because Tile [" + i + ", " + j + "].type " + map[i, j].type);
+                  //map[i - 1, j - 1].type = map[i, j - 1].type;
+                  map[i, j - 1].change_biom((TILE_TYPE)biom);
+                }
+              }
             }
           }
         }

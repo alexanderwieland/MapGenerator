@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
 using SharpDX.Toolkit;
-using SharpDX.Toolkit.Content;
+using SharpDX.Toolkit.Input;
 using SharpDX.Toolkit.Graphics;
 using System.Collections.Generic;
 
@@ -37,6 +37,8 @@ namespace MapGenerator
   {
     private GraphicsDeviceManager deviceManager;
     private SpriteBatch spriteBatch;
+    KeyboardManager keyBoardManager;
+    MouseManager mouseManager;
 
     public static Dictionary<MapGenerator.TILE_TYPE, Dictionary<MapGenerator.TILE_ORIENTATION, Texture2D>> tiles;
 
@@ -44,10 +46,12 @@ namespace MapGenerator
     
     private List<Tile> tile_list = new List<Tile>();
 
+    SpriteFont sf;
+    //SharpDX.Toolkit.GraphicsDeviceManager GDM;
     TileMap map_ground;
 
-    int draw_width = 1600;
-    int draw_height = 900;
+    int draw_width = 1000;
+    int draw_height = 800;
 
     public Generator()
     {
@@ -57,6 +61,11 @@ namespace MapGenerator
 
       IsMouseVisible = true;
 
+
+      keyBoardManager = new KeyboardManager(this);
+      mouseManager = new MouseManager(this);
+
+
       this.Content.RootDirectory = "Content";
     }
 
@@ -64,8 +73,7 @@ namespace MapGenerator
     {
       this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
       tiles = new Dictionary<TILE_TYPE, Dictionary<TILE_ORIENTATION, Texture2D>>();
-
-
+      
       base.Initialize();
     }
 
@@ -73,10 +81,11 @@ namespace MapGenerator
     {
       LoadTextures();
 
+      sf = SpriteFont.Load(this.GraphicsDevice, "Arial16.fnt");
       
-
       map_ground = new TileMap(draw_width / tile_pixels, draw_height / tile_pixels);
       map_ground.generate_ground_map();
+      map_ground.render_ground_map();
 
       base.LoadContent();
     }
@@ -105,16 +114,42 @@ namespace MapGenerator
       tiles.Add(type, new Dictionary<TILE_ORIENTATION, Texture2D>());
     }
 
-    
+    protected override void Update(GameTime gameTime)
+    {
+      MouseState ms = mouseManager.GetState();
+      KeyboardState ks = keyBoardManager.GetState();
+
+      if (ms.LeftButton.Released)
+      {
+        //Console.Clear(); 
+        //map_ground.generate_ground_map();
+
+        map_ground.render_ground_map();
+      }
+
+      if (ms.RightButton.Released)
+      {
+        Console.Clear(); 
+        map_ground.generate_ground_map(); 
+      }
+      
+      base.Update(gameTime);
+
+      if (ks.IsKeyReleased(Keys.Escape))
+      {
+        this.Exit();
+        this.Dispose();
+      }
+    }
 
     protected override void Draw(GameTime gameTime)
     {
       GraphicsDevice.Clear(Color.CornflowerBlue);
 
 
-      spriteBatch.Begin(SpriteSortMode.Texture, this.GraphicsDevice.BlendStates.NonPremultiplied);
+      spriteBatch.Begin(SpriteSortMode.Deferred, this.GraphicsDevice.BlendStates.NonPremultiplied);
 
-      map_ground.Draw(spriteBatch);
+      map_ground.Draw(spriteBatch,sf);
 
 
       spriteBatch.End();

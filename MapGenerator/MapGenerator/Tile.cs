@@ -32,7 +32,7 @@ namespace MapGenerator
       this.type = type;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch, int a, int b,SpriteFont sf)
     {
       Texture2D used_texture = null;
       Rectangle source_rect = Rectangle.Empty;
@@ -40,12 +40,19 @@ namespace MapGenerator
       get_source(out used_texture, out source_rect);
 
       spriteBatch.Draw(used_texture, position, source_rect, Color.White);
+      spriteBatch.DrawString(sf, a + ", " + b, position, Color.Black);
+    }
+
+    public void change_biom(TILE_TYPE type)
+    {
+      this.texture_in = Generator.tiles[type][TILE_ORIENTATION.CENTER];
+
+      this.type = type;
     }
 
     private void get_source(out Texture2D used_texture, out Rectangle source_rect)
     {
-      used_texture = texture_in;
-      
+      used_texture = texture_in;      
 
       switch (orientation)
       {
