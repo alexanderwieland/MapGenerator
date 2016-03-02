@@ -23,6 +23,23 @@ namespace MapGenerator
 
     public int draw_height = 0;
 
+    public int X_Position_in_pixel
+    {
+      get { return (int)position.X; }
+    }
+    public int Y_Position_in_pixel
+    {
+      get { return (int)position.Y; }
+    }
+    public int X_Position
+    {
+      get { return (int)position.X / Global_Settings.tile_pixels; }
+    }
+    public int Y_Position
+    {
+      get { return (int)position.Y / Global_Settings.tile_pixels; }
+    }
+
     public Tile(Texture2D texture_in, Texture2D texture_out, Vector2 position, TILE_TYPE type, TILE_ORIENTATION orientation)
     {
       this.texture_in = texture_in;
@@ -32,15 +49,23 @@ namespace MapGenerator
       this.type = type;
     }
 
+    public static Tile get_new_tile( TILE_TYPE type, int x, int y )
+    {
+      return new Tile( Generator.tiles[ type ][ TILE_ORIENTATION.CENTER ], Generator.tiles[ type ][ TILE_ORIENTATION.CENTER ], new SharpDX.Vector2( x * Global_Settings.tile_pixels, y * Global_Settings.tile_pixels ), type, TILE_ORIENTATION.CENTER );
+    }
+
     public void Draw(SpriteBatch spriteBatch, int a, int b,SpriteFont sf)
     {
       Texture2D used_texture = null;
       Rectangle source_rect = Rectangle.Empty;
 
-      get_source(out used_texture, out source_rect);
-
+      if( type == TILE_TYPE.NONE )
+      {
+        return;
+      }
+      get_source(out used_texture, out source_rect);   
       spriteBatch.Draw(used_texture, position, source_rect, Color.White);
-      spriteBatch.DrawString(sf, a + ", " + b, position, Color.Black);
+      //spriteBatch.DrawString(sf, a + ", " + b, position, Color.Black);
     }
 
     public void change_biom(TILE_TYPE type)
@@ -59,73 +84,73 @@ namespace MapGenerator
         case TILE_ORIENTATION.NW:
           source_rect = new Rectangle(
             0, 
-            0, 
-            Generator.tile_pixels, 
-            Generator.tile_pixels
+            0,
+            Global_Settings.tile_pixels,
+            Global_Settings.tile_pixels
             );
           break;
         case TILE_ORIENTATION.N:
           source_rect = new Rectangle(
-            Generator.tile_pixels * 1,
-            Generator.tile_pixels * 0,
-            Generator.tile_pixels,
-            Generator.tile_pixels
+            Global_Settings.tile_pixels * 1,
+            Global_Settings.tile_pixels * 0,
+            Global_Settings.tile_pixels,
+            Global_Settings.tile_pixels
             );
           break;
         case TILE_ORIENTATION.NE:
           source_rect = new Rectangle(
-            Generator.tile_pixels * 2,
-            Generator.tile_pixels * 0,
-            Generator.tile_pixels,
-            Generator.tile_pixels
+            Global_Settings.tile_pixels * 2,
+            Global_Settings.tile_pixels * 0,
+            Global_Settings.tile_pixels,
+            Global_Settings.tile_pixels
             );
           break;
         case TILE_ORIENTATION.E:
           source_rect = new Rectangle(
-           Generator.tile_pixels * 2,
-           Generator.tile_pixels * 1,
-           Generator.tile_pixels,
-           Generator.tile_pixels
+           Global_Settings.tile_pixels * 2,
+           Global_Settings.tile_pixels * 1,
+           Global_Settings.tile_pixels,
+           Global_Settings.tile_pixels
            );
           break;
         case TILE_ORIENTATION.SE:
           source_rect = new Rectangle(
-           Generator.tile_pixels * 2,
-           Generator.tile_pixels * 2,
-           Generator.tile_pixels,
-           Generator.tile_pixels
+           Global_Settings.tile_pixels * 2,
+           Global_Settings.tile_pixels * 2,
+           Global_Settings.tile_pixels,
+           Global_Settings.tile_pixels
            );
           break;
         case TILE_ORIENTATION.S:
           source_rect = new Rectangle(
-           Generator.tile_pixels * 1,
-           Generator.tile_pixels * 2,
-           Generator.tile_pixels,
-           Generator.tile_pixels
+           Global_Settings.tile_pixels * 1,
+           Global_Settings.tile_pixels * 2,
+           Global_Settings.tile_pixels,
+           Global_Settings.tile_pixels
            );
           break;
         case TILE_ORIENTATION.SW:
           source_rect = new Rectangle(
-           Generator.tile_pixels * 0,
-           Generator.tile_pixels * 2,
-           Generator.tile_pixels,
-           Generator.tile_pixels
+           Global_Settings.tile_pixels * 0,
+           Global_Settings.tile_pixels * 2,
+           Global_Settings.tile_pixels,
+           Global_Settings.tile_pixels
            );
           break;
         case TILE_ORIENTATION.W:
           source_rect = new Rectangle(
-           Generator.tile_pixels * 0,
-           Generator.tile_pixels * 1,
-           Generator.tile_pixels,
-           Generator.tile_pixels
+           Global_Settings.tile_pixels * 0,
+           Global_Settings.tile_pixels * 1,
+           Global_Settings.tile_pixels,
+           Global_Settings.tile_pixels
            );
           break;
         case TILE_ORIENTATION.CENTER:
           source_rect = new Rectangle(
-           Generator.tile_pixels * 1,
-           Generator.tile_pixels * 1,
-           Generator.tile_pixels,
-           Generator.tile_pixels
+           Global_Settings.tile_pixels * 1,
+           Global_Settings.tile_pixels * 1,
+           Global_Settings.tile_pixels,
+           Global_Settings.tile_pixels
            );
           break;
         default:

@@ -11,10 +11,15 @@ namespace MapGenerator
         [STAThread]
         public static void Main()
         {
-            using ( Generator map_gen = new Generator( ) )
-            {
-                map_gen.Run( );
-            }
-        }
+      //using ( LandGenerator map_gen = new LandGenerator( ) )
+      //{
+      //    map_gen.Run( );
+      //}
+
+      using ( RoomGenerator map_gen = new RoomGenerator( ) )
+      {
+        map_gen.Run( );
+      }
     }
+  }
 }
