@@ -46,14 +46,24 @@ namespace MapGenerator
 
     public void init_flood_fill( )
     {
-      for ( int i = 0; i < map.map.GetLength( 0 ); i++ )
+      for ( int i = 0; i < 10; i++ )
       {
-        for ( int j = 0; j < map.map.GetLength( 1 ); j++ )
+        for ( int j = 0; j < 10; j++ )
         {
           if ( map.map[ i, j ].type == TILE_TYPE.NONE )
           {
             floodfill( map.map[ i, j ] );
-            
+          }
+        }
+      }
+      // Fill everything with nix 
+      for ( int i = 1; i < map.map.GetLength( 0 ); i++ )
+      {
+        for ( int j = 1; j < map.map.GetLength( 1 ); j++ )
+        {
+          if ( map.map[ i, j ].type == TILE_TYPE.NONE )
+          {
+            map.map[ i, j ] = Tile.get_new_tile( TILE_TYPE.GRAVEL, i, j );
           }
         }
       }
@@ -62,6 +72,8 @@ namespace MapGenerator
     public void floodfill( Tile tile )
     {
       Stack<Tile> tiles = new Stack<Tile>( );
+
+      Stack<Tile> backtrack = new Stack<Tile>( );
 
       // 1
       if ( tile.type != TILE_TYPE.NONE || !tile_is_valid( tile, Orientation.NONE ) )
@@ -81,6 +93,11 @@ namespace MapGenerator
           int y = (int)popped.Y_Position;
 
           map.map[ x, y ].change_biom( TILE_TYPE.GRASS );
+
+          if ( tile.X_Position % 2 == 0 && tile.Y_Position % 2 == 0 )
+          {
+            backtrack.Push( popped );
+          }
 
           switch ( rand.Next( 3 ) )
           {
@@ -159,11 +176,107 @@ namespace MapGenerator
                 tiles.Push( map.map[ x, y - 1 ] );
               }              
                 break;
-          }
-
-         
+          }        
           
         }
+      }
+
+      while ( backtrack.Count > 0 )
+      {
+        Tile popped = backtrack.Pop( );
+
+        int x = (int)popped.X_Position;
+        int y = (int)popped.Y_Position;
+
+        if ( popped.type == TILE_TYPE.NONE )
+        {
+          map.map[ x, y ].change_biom( TILE_TYPE.GRASS );
+          if ( tile.X_Position % 2 == 0 && tile.Y_Position % 2 == 0 )
+          {
+            backtrack.Push( popped );
+          }
+
+        }
+          switch ( rand.Next( 3 ) )
+          {
+            case 0:
+              if ( floodfill_is_left_free( popped ) && tile_is_valid( map.map[ x - 1, y ], Orientation.RIGHT ) )
+              {
+                backtrack.Push( map.map[ x - 1, y ] );
+              }
+              else if ( floodfill_is_right_free( popped ) && tile_is_valid( map.map[ x + 1, y ], Orientation.LEFT ) )
+              {
+                backtrack.Push( map.map[ x + 1, y ] );
+              }
+              else if ( floodfill_is_up_free( popped ) && tile_is_valid( map.map[ x, y - 1 ], Orientation.DOWN ) )
+              {
+                backtrack.Push( map.map[ x, y - 1 ] );
+              }
+              else if ( floodfill_is_down_free( popped ) && tile_is_valid( map.map[ x, y + 1 ], Orientation.UP ) )
+              {
+                backtrack.Push( map.map[ x, y + 1 ] );
+              }
+              break;
+
+            case 1:
+              if ( floodfill_is_right_free( popped ) && tile_is_valid( map.map[ x + 1, y ], Orientation.LEFT ) )
+              {
+                backtrack.Push( map.map[ x + 1, y ] );
+              }
+              else if ( floodfill_is_up_free( popped ) && tile_is_valid( map.map[ x, y - 1 ], Orientation.DOWN ) )
+              {
+                backtrack.Push( map.map[ x, y - 1 ] );
+              }
+              else if ( floodfill_is_down_free( popped ) && tile_is_valid( map.map[ x, y + 1 ], Orientation.UP ) )
+              {
+                backtrack.Push( map.map[ x, y + 1 ] );
+              }
+              else if ( floodfill_is_left_free( popped ) && tile_is_valid( map.map[ x - 1, y ], Orientation.RIGHT ) )
+              {
+                backtrack.Push( map.map[ x - 1, y ] );
+              }
+              break;
+
+            case 2:
+              if ( floodfill_is_up_free( popped ) && tile_is_valid( map.map[ x, y - 1 ], Orientation.DOWN ) )
+              {
+                backtrack.Push( map.map[ x, y - 1 ] );
+              }
+              else if ( floodfill_is_down_free( popped ) && tile_is_valid( map.map[ x, y + 1 ], Orientation.UP ) )
+              {
+                backtrack.Push( map.map[ x, y + 1 ] );
+              }
+              else if ( floodfill_is_left_free( popped ) && tile_is_valid( map.map[ x - 1, y ], Orientation.RIGHT ) )
+              {
+                backtrack.Push( map.map[ x - 1, y ] );
+              }
+              else if ( floodfill_is_right_free( popped ) && tile_is_valid( map.map[ x + 1, y ], Orientation.LEFT ) )
+              {
+                backtrack.Push( map.map[ x + 1, y ] );
+              }
+              break;
+
+            case 3:
+              if ( floodfill_is_down_free( popped ) && tile_is_valid( map.map[ x, y + 1 ], Orientation.UP ) )
+              {
+                backtrack.Push( map.map[ x, y + 1 ] );
+              }
+              else if ( floodfill_is_left_free( popped ) && tile_is_valid( map.map[ x - 1, y ], Orientation.RIGHT ) )
+              {
+                backtrack.Push( map.map[ x - 1, y ] );
+              }
+              else if ( floodfill_is_right_free( popped ) && tile_is_valid( map.map[ x + 1, y ], Orientation.LEFT ) )
+              {
+                backtrack.Push( map.map[ x + 1, y ] );
+              }
+              else if ( floodfill_is_up_free( popped ) && tile_is_valid( map.map[ x, y - 1 ], Orientation.DOWN ) )
+              {
+                backtrack.Push( map.map[ x, y - 1 ] );
+              }
+              break;
+          }
+   
+
       }
     }
     

@@ -106,3 +106,4 @@ D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Arial16.fnt
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.Toolkit.Input.dll
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.Toolkit.Input.xml
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Content\Grass_out.png
+D:\GitHub\MapGenerator\MapGenerator\MapGenerator\obj\Debug\MapGenerator.csprojResolveAssemblyReference.cache
