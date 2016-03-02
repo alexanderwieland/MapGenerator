@@ -170,6 +170,10 @@ namespace MapGenerator
 
     public bool tile_is_valid( Tile tile, Orientation or )
     {
+
+      if ( tile.X_Position % 2 == 1 && tile.Y_Position % 2 == 1 )
+        return false;
+
       if ( or != Orientation.LEFT && !floodfill_is_left_free( tile ))
         return false;
 
@@ -201,7 +205,7 @@ namespace MapGenerator
 
     public bool floodfill_is_left_free( Tile tile )
     {
-      if ( tile.X_Position - 1 >= 0 && map.map[ tile.X_Position - 1, tile.Y_Position ].type == TILE_TYPE.NONE )
+      if ( tile.X_Position - 1 > 0 && map.map[ tile.X_Position - 1, tile.Y_Position ].type == TILE_TYPE.NONE )
       {
         return true;
       }
@@ -217,7 +221,7 @@ namespace MapGenerator
     }
     public bool floodfill_is_up_free( Tile tile )
     {
-      if ( tile.Y_Position - 1 >= 0 && map.map[ tile.X_Position, tile.Y_Position - 1 ].type == TILE_TYPE.NONE )
+      if ( tile.Y_Position - 1 > 0 && map.map[ tile.X_Position, tile.Y_Position - 1 ].type == TILE_TYPE.NONE )
       {
         return true;
       }
@@ -233,7 +237,7 @@ namespace MapGenerator
     }
     public bool floodfill_is_up_left_free( Tile tile )
     {
-      if ( tile.Y_Position - 1 >= 0 && tile.X_Position - 1 >= 0 && map.map[ tile.X_Position - 1, tile.Y_Position - 1 ].type == TILE_TYPE.NONE )
+      if ( tile.Y_Position - 1 > 0 && tile.X_Position - 1 > 0 && map.map[ tile.X_Position - 1, tile.Y_Position - 1 ].type == TILE_TYPE.NONE )
       {
         return true;
       }
@@ -241,7 +245,7 @@ namespace MapGenerator
     }
     public bool floodfill_is_up_right_free( Tile tile )
     {
-      if ( tile.Y_Position - 1 >= 0 && tile.X_Position + 1 < map.map.GetLength( 0 ) && map.map[ tile.X_Position + 1, tile.Y_Position - 1 ].type == TILE_TYPE.NONE )
+      if ( tile.Y_Position - 1 > 0 && tile.X_Position + 1 < map.map.GetLength( 0 ) && map.map[ tile.X_Position + 1, tile.Y_Position - 1 ].type == TILE_TYPE.NONE )
       {
         return true;
       }
@@ -258,7 +262,7 @@ namespace MapGenerator
 
     public bool floodfill_is_down_left_free( Tile tile )
     {
-      if ( tile.Y_Position + 1 < map.map.GetLength( 1 ) && tile.X_Position - 1 >= 0 && map.map[ tile.X_Position - 1, tile.Y_Position + 1 ].type == TILE_TYPE.NONE )
+      if ( tile.Y_Position + 1 < map.map.GetLength( 1 ) && tile.X_Position - 1 > 0 && map.map[ tile.X_Position - 1, tile.Y_Position + 1 ].type == TILE_TYPE.NONE )
       {
         return true;
       }
@@ -269,9 +273,9 @@ namespace MapGenerator
     {
       for ( int i = 0; i < v; i++ )
       {
-        Room room = new Room( rand.Next( 7, 15 ), rand.Next( 7, 15 ) );
+        Room room = new Room( rand.Next( 3, 8 ) *2+1, rand.Next( 3, 8 ) * 2 + 1 );
 
-        map.add_array( room.Room_map, new Vector2( rand.Next( 0, map.Width -1 ), rand.Next( 0, map.Height -1) )  );
+        map.add_array( room.Room_map, new Vector2( rand.Next( 0, map.Width /2 -1 ) * 2 + 1, rand.Next( 0, map.Height/2 -1) ) * 2 + 1 );
       }
 
       // Fill everything with nix 

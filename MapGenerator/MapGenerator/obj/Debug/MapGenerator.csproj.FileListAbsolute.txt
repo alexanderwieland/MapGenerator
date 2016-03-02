@@ -99,7 +99,6 @@ D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.D3DCompiler.x
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.Direct2D1.xml
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.Direct3D9.xml
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\AssimpNet.xml
-D:\GitHub\MapGenerator\MapGenerator\MapGenerator\obj\Debug\MapGenerator.csprojResolveAssemblyReference.cache
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.DirectInput.dll
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\SharpDX.DirectInput.xml
 D:\GitHub\MapGenerator\MapGenerator\MapGenerator\bin\Debug\Content\Arial16.xml
