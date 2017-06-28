@@ -16,7 +16,7 @@ namespace MapGenerator
       //    map_gen.Run( );
       //}
 
-      using ( RoomGenerator map_gen = new RoomGenerator( ) )
+      using ( DungeonGenerator map_gen = new DungeonGenerator( ) )
       {
         map_gen.Run( );
       }

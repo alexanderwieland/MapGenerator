@@ -40,6 +40,9 @@ namespace MapGenerator
       get { return (int)position.Y / Global_Settings.tile_pixels; }
     }
 
+    public bool in_main_region = false;
+    public bool untouchable = false;
+
     public Tile(Texture2D texture_in, Texture2D texture_out, Vector2 position, TILE_TYPE type, TILE_ORIENTATION orientation)
     {
       this.texture_in = texture_in;
@@ -65,6 +68,11 @@ namespace MapGenerator
       }
       get_source(out used_texture, out source_rect);   
       spriteBatch.Draw(used_texture, position, source_rect, Color.White);
+
+      if ( this.in_main_region )
+      {
+        //spriteBatch.Draw( Generator.tiles[TILE_TYPE.MAIN_REGION][TILE_ORIENTATION.CENTER], position, source_rect, Color.White );
+      }
       //spriteBatch.DrawString(sf, a + ", " + b, position, Color.Black);
     }
 

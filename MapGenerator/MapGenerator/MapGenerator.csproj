@@ -59,16 +59,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="FloodFiller.cs" />
     <Compile Include="Global_Settings.cs" />
     <Compile Include="LandGenerator.cs" />
     <Compile Include="Room.cs" />
-    <Compile Include="RoomGenerator.cs" />
+    <Compile Include="RoomConnector.cs" />
+    <Compile Include="DungeonGenerator.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Texture_Collection.cs" />
     <Compile Include="Tile.cs" />
-    <Compile Include="TileMap.cs" />
+    <Compile Include="DungeonMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SharpDX">
@@ -117,6 +119,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Gravel_out.png" />
+    <Content Include="Content\MainRegion.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Sand_in.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
